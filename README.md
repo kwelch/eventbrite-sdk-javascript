@@ -1,6 +1,6 @@
 # Eventbrite JavaScript SDK
 
-| NOTE: This library is still in alpha, under initial development.
+> NOTE: This library is still in alpha, under initial development.
 
 ## Installation
 
