@@ -1,0 +1,82 @@
+{
+    "name": "brite-rest",
+    "version": "0.0.0-semantically-released",
+    "description": "The official JavaScript SDK for the Eventbrite v3 API",
+    "author": "Eventbrite <npmjs@eventbrite.com>",
+    "main": "lib/umd/index.js",
+    "module": "lib/esm/index.js",
+    "jsnext:main": "lib/esm/index.js",
+    "browser": "dist/brite-rest.js",
+    "keywords": [
+        "rest",
+        "api",
+        "sdk",
+        "events",
+        "tickets",
+        "eventbrite"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/eventbrite/eventbrite-sdk-javascript.git"
+    },
+    "bugs": {
+        "url": "https://github.com/eventbrite/eventbrite-sdk-javascript/issues"
+    },
+    "homepage": "https://github.com/eventbrite/eventbrite-sdk-javascript#readme",
+    "license": "MIT",
+    "scripts": {
+        "check": "npm-run-all --parallel lint flow --serial flow:coverage",
+        "flow": "flow check",
+        "flow:coverage": "flow-coverage-report -i 'src/**/*.js' -t text -t html",
+        "format": "prettier-eslint --write",
+        "lint": "eslint src",
+        "precommit": "lint-staged",
+        "test": "jest",
+        "test:watch": "yarn test --watch",
+        "test:ci": "yarn test --ci",
+        "validate": "npm-run-all --parallel check test:ci"
+    },
+    "lint-staged": {
+        "src/**/*.js": [
+            "yarn format",
+            "git add"
+        ]
+    },
+    "eslintConfig": {
+        "extends": [
+            "eventbrite",
+            "plugin:flowtype/recommended"
+        ],
+        "plugins": [
+            "flowtype"
+        ],
+        "env": {
+            "jest": true,
+            "browser": true,
+            "node": true
+        }
+    },
+    "dependencies": {
+        "isomorphic-fetch": "^2.2.1",
+        "lodash": "^4.17.5"
+    },
+    "devDependencies": {
+        "babel-core": "^6.26.0",
+        "babel-eslint": "^7.0.0",
+        "babel-jest": "^22.2.2",
+        "babel-preset-env": "^1.6.1",
+        "babel-preset-flow": "^6.23.0",
+        "eslint": "^3.0.0",
+        "eslint-config-eventbrite": "^4.1.0",
+        "eslint-plugin-flowtype": "^2.44.0",
+        "eslint-plugin-import": "^2.0.0",
+        "flow-bin": "^0.65.0",
+        "flow-coverage-report": "^0.4.1",
+        "husky": "^0.14.3",
+        "jest": "^22.3.0",
+        "lint-staged": "^6.1.0",
+        "node": "^8.9.2",
+        "npm-run-all": "^4.1.2",
+        "prettier-eslint-cli": "^4.7.1"
+    }
+}

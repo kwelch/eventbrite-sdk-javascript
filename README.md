@@ -1,6 +1,6 @@
 # Eventbrite JavaScript SDK
 
-> NOTE: This library is still in alpha, under initial development.
+> NOTE: This library is still in alpha and under initial development.
 
 ## Installation
 
@@ -16,7 +16,7 @@ Coming soon...
 
 ## Project philosophy
 
-We take the stability of this SDK **very** seriously. `eventbrite-rest` follows the [SemVer](http://semver.org/) standard for versioning.
+We take the stability of this SDK **very** seriously. `brite-rest` follows the [SemVer](http://semver.org/) standard for versioning.
 
 ## License
 
