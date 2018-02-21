@@ -1,0 +1,20 @@
+# Configuration files
+tsconfig.json
+config
+
+# Source code
+src
+
+# Dependency directories
+node_modules
+yarn.lock
+
+# Editor settings
+.vscode
+
+# Logs
+logs
+*.log
+
+# Test files
+**/*.spec.*
