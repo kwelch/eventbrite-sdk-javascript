@@ -5,3 +5,19 @@ describe('configurations', () => {
         expect(() => briteRest()).not.toThrow();
     });
 });
+
+// TODO: remove when build process has stabilized
+describe('build functionality', () => {
+    it('should compile while using async await', async () => {
+        const result = await new Promise<number>((resolve) => resolve(1));
+
+        expect(result).toEqual(1);
+    });
+
+    it('should work with spread operator', () => {
+        const parent = {first: 1};
+        const child = {...parent, second: 2};
+
+        expect(child).toEqual({first: 1, second: 2});
+    });
+});
