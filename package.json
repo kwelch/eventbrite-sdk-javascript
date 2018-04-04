@@ -37,7 +37,7 @@
         "build:targets": "gulp build",
         "prebuild:targets": "rm -rf dist && rm -rf lib",
         "tsc": "tsc",
-        "test": "jest --config=jest.json",
+        "test": "jest --config=jest-test.config.json",
         "test:ci": "yarn test --ci",
         "test:watch": "yarn test --watch",
         "validate": "npm-run-all --parallel check:static check:size test:ci"
@@ -81,6 +81,7 @@
         "gulp-uglify": "^3.0.0",
         "husky": "^0.14.3",
         "jest": "^22.4.0",
+        "jest-runner-eslint": "^0.4.0",
         "lint-staged": "^6.1.0",
         "node": "^8.9.2",
         "npm-run-all": "^4.1.2",

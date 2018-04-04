@@ -1,0 +1,9 @@
+{
+  "runner": "jest-runner-eslint",
+  "displayName": "lint",
+  "moduleFileExtensions": ["ts", "js"],
+  "transform": {
+      "^.+\\.(ts|js)$": "typescript-babel-jest"
+  },
+  "testMatch": ["**/src/**/*.(ts|js)"]
+}
