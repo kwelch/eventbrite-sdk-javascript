@@ -30,7 +30,7 @@
         "precheck:size": "yarn gulp build:dist:min",
         "check:static": "npm-run-all --parallel lint tsc",
         "format": "prettier-eslint --write",
-        "lint": "eslint --cache --max-warnings 0 --ext .ts,.js src",
+        "lint": "jest --config=jest-lint.config.json",
         "precommit": "lint-staged",
         "gen:declarations": "tsc --p ./tsconfig.build.json",
         "build": "npm-run-all build:targets gen:declarations",
