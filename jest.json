@@ -1,7 +1,0 @@
-{
-    "moduleFileExtensions": ["ts", "js"],
-    "transform": {
-        "^.+\\.(ts|js)$": "typescript-babel-jest"
-    },
-    "testMatch": ["**/src/**/*.spec.(ts|js)"]
-}
