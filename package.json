@@ -30,17 +30,18 @@
         "precheck:size": "yarn gulp build:dist:min",
         "check:static": "npm-run-all --parallel lint tsc",
         "format": "prettier-eslint --write",
-        "lint": "jest --config=jest-lint.config.json",
+        "lint": "jest --config=jest-lint.config.js",
         "precommit": "lint-staged",
         "gen:declarations": "tsc --p ./tsconfig.build.json",
         "build": "npm-run-all build:targets gen:declarations",
         "build:targets": "gulp build",
         "prebuild:targets": "rm -rf dist && rm -rf lib",
         "tsc": "tsc",
-        "test": "jest --config=jest-test.config.json",
+        "test": "jest --config=jest-test.config.js",
         "test:ci": "yarn test --ci",
         "test:watch": "yarn test --watch",
-        "validate": "npm-run-all --parallel check:static check:size test:ci"
+        "validate": "npm-run-all --parallel check:static check:size test:ci",
+        "validate:watch": "jest --watch"
     },
     "lint-staged": {
         "*.{ts,js}": [
@@ -103,5 +104,8 @@
             "path": "./dist/eventbrite.min.js",
             "threshold": "4Kb"
         }
-    ]
+    ],
+    "jest": {
+        "projects": ["jest-test.config.js", "jest-lint.config.js"]
+    }
 }
