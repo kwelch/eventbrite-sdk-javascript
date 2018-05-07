@@ -26,7 +26,6 @@
     "homepage": "https://github.com/eventbrite/eventbrite-sdk-javascript#readme",
     "license": "MIT",
     "scripts": {
-        "check:static": "npm-run-all --parallel lint tsc",
         "format": "prettier-eslint --write",
         "lint": "jest --config=jest-lint.config.js",
         "precommit": "lint-staged",
