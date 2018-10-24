@@ -1,2 +1,2 @@
-export const PAGINATION = 'page';
-export const CONTINUATION = 'continuation';
+export const PAGINATION_KEY = 'page';
+export const CONTINUATION_KEY = 'continuation';
