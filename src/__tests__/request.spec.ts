@@ -29,7 +29,7 @@ describe('request', () => {
             mockFetch(getSuccessfulCodeRes());
         });
 
-        it('calls fetch and calls fetch with appropriate defaults', async () => {
+        it('calls fetch and calls fetch with appropriate defaults', async() => {
             await request(TEST_URL);
 
             expect(getMockFetch()).toHaveBeenCalledTimes(1);
@@ -41,7 +41,7 @@ describe('request', () => {
             );
         });
 
-        it('calls fetch and adds "application/json" content type when method is not GET', async () => {
+        it('calls fetch and adds "application/json" content type when method is not GET', async() => {
             await request(TEST_URL, {method: 'POST', body: '{}'});
 
             expect(getMockFetch()).toHaveBeenCalledTimes(1);
@@ -58,7 +58,7 @@ describe('request', () => {
             );
         });
 
-        it('calls fetch and respects overrides in options', async () => {
+        it('calls fetch and respects overrides in options', async() => {
             await request(TEST_URL, {credentials: 'omit'});
 
             expect(getMockFetch()).toHaveBeenCalledTimes(1);
@@ -70,7 +70,7 @@ describe('request', () => {
             );
         });
 
-        it('calls fetch and respects overrides in option headers', async () => {
+        it('calls fetch and respects overrides in option headers', async() => {
             await request(TEST_URL, {
                 headers: {
                     'X-TEST': 'testHeader',
@@ -92,7 +92,7 @@ describe('request', () => {
             );
         });
 
-        it('calls fetch and merges overrides with defaults in option headers', async () => {
+        it('calls fetch and merges overrides with defaults in option headers', async() => {
             await request(TEST_URL, {
                 headers: {
                     'X-TEST': 'testHeader',
@@ -116,7 +116,7 @@ describe('request', () => {
                 })
             );
         });
-        it('calls fetch and return parsed response JSON data', async () => {
+        it('calls fetch and return parsed response JSON data', async() => {
             await expect(request(TEST_URL)).resolves.toEqual(
                 MOCK_USERS_ME_RESPONSE_DATA
             );
@@ -126,7 +126,7 @@ describe('request', () => {
     });
 
     describe('error handling', () => {
-        it('should reject only with response when response is invalid JSON', async () => {
+        it('should reject only with response when response is invalid JSON', async() => {
             const response = new Response('{sa;dfsdfi');
 
             mockFetch(response);
@@ -136,7 +136,7 @@ describe('request', () => {
             });
         });
 
-        it('calls fetch and rejects with parsed error when there is a status error', async () => {
+        it('calls fetch and rejects with parsed error when there is a status error', async() => {
             const response = getInternalErrorRes();
 
             mockFetch(response);
@@ -153,7 +153,7 @@ describe('request', () => {
             expect(getMockFetch()).toHaveBeenCalledTimes(1);
         });
 
-        it('calls fetch and rejects with parsed argument errors when there is an ARGUMENT_ERROR', async () => {
+        it('calls fetch and rejects with parsed argument errors when there is an ARGUMENT_ERROR', async() => {
             const response = getArgumentsErrorRes();
 
             mockFetch(response);

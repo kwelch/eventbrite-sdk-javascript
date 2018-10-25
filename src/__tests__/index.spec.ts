@@ -25,7 +25,7 @@ describe('request', () => {
         restoreMockFetch();
     });
 
-    it('makes request to API base url default w/ no token when no configuration is specified', async () => {
+    it('makes request to API base url default w/ no token when no configuration is specified', async() => {
         const {request} = eventbrite();
 
         await expect(request('/users/me/')).resolves.toEqual(
@@ -39,7 +39,7 @@ describe('request', () => {
         );
     });
 
-    it('makes request to API base url override w/ specified token', async () => {
+    it('makes request to API base url override w/ specified token', async() => {
         const {request} = eventbrite({
             token: MOCK_TOKEN,
             baseUrl: MOCK_BASE_URL,
@@ -60,7 +60,7 @@ describe('request', () => {
         );
     });
 
-    it('properly specifies authorization header token when other header options are already specified', async () => {
+    it('properly specifies authorization header token when other header options are already specified', async() => {
         const {request} = eventbrite({
             token: MOCK_TOKEN,
         });
