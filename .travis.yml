@@ -1,6 +1,7 @@
 language: node_js
 node_js:
-  - "node"
+# Removed until v11 bug is resolve see #43
+# - "node"
   - "10"
   - "8"
   - "6"

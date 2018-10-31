@@ -1,6 +1,8 @@
 import {Sdk, SdkConfig} from './types';
 import request from './request';
 
+export * from './constants';
+
 const DEFAULT_API_URL = 'https://www.eventbriteapi.com/v3';
 
 const eventbrite = ({
