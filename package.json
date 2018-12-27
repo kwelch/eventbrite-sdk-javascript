@@ -99,7 +99,7 @@
         "rollup-plugin-typescript": "^1.0.0",
         "rollup-plugin-uglify": "^6.0.0",
         "tslib": "^1.9.3",
-        "typescript": "^3.2.2",
+        "typescript": "~3.1.1",
         "typescript-babel-jest": "^1.0.5",
         "typescript-eslint-parser": "^21.0.2"
     },
