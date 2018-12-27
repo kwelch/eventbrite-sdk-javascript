@@ -72,6 +72,7 @@
         "eslint": "^5.11.1",
         "eslint-config-eventbrite": "^5.0.0",
         "eslint-plugin-import": "^2.0.0",
+        "eslint-plugin-jest": "^22.1.2",
         "eslint-plugin-typescript": "^0.14.0",
         "gulp": "^4.0.0",
         "gulp-babel": "^8.0.0",
