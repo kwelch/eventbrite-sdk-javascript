@@ -7,14 +7,14 @@ const replace = require('gulp-replace');
 const debug = require('gulp-debug');
 const util = require('gulp-util');
 
-const { rollup } = require('rollup');
+const {rollup} = require('rollup');
 const rollupBabel = require('rollup-plugin-babel');
 const rollupNodeResolve = require('rollup-plugin-node-resolve');
 const rollupCommonjs = require('rollup-plugin-commonjs');
 const rollupJson = require('rollup-plugin-json');
 const rollupReplace = require('rollup-plugin-replace');
 const rollupTypescript = require('rollup-plugin-typescript');
-const rollupUglify = require('rollup-plugin-uglify').uglify;
+const {uglify: rollupUglify} = require('rollup-plugin-uglify');
 
 const FORMAT_ESM = 'esm';
 const FORMAT_CJS = 'cjs';
@@ -29,12 +29,12 @@ const FILES_TO_BUILD = [
     'src/**/*.@(ts|js)',
 
     // but exclude the test files
-    '!src/**/__tests__/**'
+    '!src/**/__tests__/**',
 ];
 
 // When transpiling to ES format, we still use the `env` preset
 // and we want everything transpiled EXCEPT modules
-const ESM_ENV_PRESET = ['@babel/env', { modules: false }];
+const ESM_ENV_PRESET = ['@babel/env', {modules: false}];
 
 // When transpiling to UMD, we need the UMD transform plugin.
 // Need to explicitly list the globals unfortunately
@@ -43,27 +43,27 @@ const UMD_TRANSFORM_PLUGIN = [
     {
         globals: {
             index: MODULE_NAME,
-            'isomorphic-fetch': 'fetch'
+            'isomorphic-fetch': 'fetch',
         },
-        exactGlobals: true
-    }
+        exactGlobals: true,
+    },
 ];
 
-const _getBabelConfig = format => ({
+const _getBabelConfig = (format) => ({
     babelrc: false,
 
     presets: [
         format === FORMAT_ESM ? ESM_ENV_PRESET : '@babel/env',
-        '@babel/typescript'
+        '@babel/typescript',
     ],
     plugins: [
         '@babel/proposal-class-properties',
         '@babel/proposal-object-rest-spread',
-        ...(format === FORMAT_UMD ? [UMD_TRANSFORM_PLUGIN] : [])
-    ]
+        ...(format === FORMAT_UMD ? [UMD_TRANSFORM_PLUGIN] : []),
+    ],
 });
 
-const _getBabelStream = format =>
+const _getBabelStream = (format) =>
     gulp
         // get a stream of the files to transpile
         .src(FILES_TO_BUILD)
@@ -72,7 +72,7 @@ const _getBabelStream = format =>
         // do the appropriate babel transpile (this is a copy from package.json)
         .pipe(babel(_getBabelConfig(format)));
 
-const _genUmd = ({ minify = false } = {}) =>
+const _genUmd = ({minify = false} = {}) =>
     _getBabelStream(FORMAT_UMD)
         // If you're using UMD, you probably don't have `process.env.NODE_ENV` so, we'll replace it.
         // If you're using the unminified UMD, you're probably in DEV
@@ -85,16 +85,16 @@ const _genUmd = ({ minify = false } = {}) =>
         )
         // minify the files and rename to .min.js extension (when minifying)
         .pipe(minify ? uglify() : util.noop())
-        .pipe(minify ? rename({ extname: '.min.js' }) : util.noop())
+        .pipe(minify ? rename({extname: '.min.js'}) : util.noop())
         .pipe(sourcemaps.write('./'))
         .pipe(
             debug({
-                title: minify ? 'Building + Minifying UMD:' : 'Building UMD:'
+                title: minify ? 'Building + Minifying UMD:' : 'Building UMD:',
             })
         )
         .pipe(gulp.dest('lib/umd'));
 
-const _genDist = ({ minify = false } = {}) =>
+const _genDist = ({minify = false} = {}) =>
     rollup({
         input: SOURCE_ENTRY,
 
@@ -104,7 +104,7 @@ const _genDist = ({ minify = false } = {}) =>
             rollupReplace({
                 'process.env.NODE_ENV': JSON.stringify(
                     minify ? 'production' : 'development'
-                )
+                ),
             }),
 
             // convert JSON files to ES6 modules, so they can be included in Rollup bundle
@@ -128,13 +128,13 @@ const _genDist = ({ minify = false } = {}) =>
                 browser: true,
 
                 // include typescript files as default extensions
-                extensions: ['.ts', '.js']
+                extensions: ['.ts', '.js'],
             }),
 
             // Convert CommonJS modules to ES6 modules, so they can be included in a Rollup bundle
             rollupCommonjs({
                 // Node modules are the ones we're trying to get it to understand
-                include: 'node_modules/**'
+                include: 'node_modules/**',
             }),
 
             // Seamless integration between Rollup and Babel
@@ -145,7 +145,7 @@ const _genDist = ({ minify = false } = {}) =>
                         exclude: 'node_modules/**',
 
                         // don't place helpers at the top of the files, but point to reference contained external helpers
-                        externalHelpers: true
+                        externalHelpers: true,
                     },
                     _getBabelConfig(FORMAT_ESM)
                 )
@@ -153,9 +153,9 @@ const _genDist = ({ minify = false } = {}) =>
 
             // Minify the code if that option is specified
             // `false` will get filtered out below
-            minify && rollupUglify()
-        ].filter(Boolean)
-    }).then(bundle => {
+            minify && rollupUglify(),
+        ].filter(Boolean),
+    }).then((bundle) => {
         bundle.write({
             format: FORMAT_UMD,
             file: `dist/eventbrite${minify ? '.min' : ''}.js`,
@@ -163,32 +163,32 @@ const _genDist = ({ minify = false } = {}) =>
             // The window global variable name for the package
             name: MODULE_NAME,
 
-            sourcemap: true
+            sourcemap: true,
         });
     });
 
 // Used by modern dependency systems like Webpack or Rollup that can do tree-shaking
 gulp.task('build:lib:esm', () =>
     _getBabelStream(FORMAT_ESM)
-        .pipe(debug({ title: 'Building ESM:' }))
+        .pipe(debug({title: 'Building ESM:'}))
         .pipe(gulp.dest('lib/esm'))
 );
 
 // Used primarily by Node for resolving dependencies
 gulp.task('build:lib:cjs', () =>
     _getBabelStream(FORMAT_CJS)
-        .pipe(debug({ title: 'Building CJS' }))
+        .pipe(debug({title: 'Building CJS'}))
         .pipe(gulp.dest('lib/cjs'))
 );
 
 // Used by legacy dependency systems like requireJS
 gulp.task('build:dist', () => _genDist());
-gulp.task('build:dist:min', () => _genDist({ minify: true }));
+gulp.task('build:dist:min', () => _genDist({minify: true}));
 
 // Unclear what would use this over the previous 3, but keeping for now
 // May get removed in later releases
 gulp.task('build:lib:umd', () => _genUmd());
-gulp.task('build:lib:umd:min', () => _genUmd({ minify: true }));
+gulp.task('build:lib:umd:min', () => _genUmd({minify: true}));
 
 gulp.task(
     'build:lib',
