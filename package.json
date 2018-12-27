@@ -112,5 +112,10 @@
             "jest-lint.config.js",
             "jest-tsc.config.js"
         ]
+    },
+    "prettier": {
+        "tabWidth": 4,
+        "semi": true,
+        "singleQuote": true
     }
 }
