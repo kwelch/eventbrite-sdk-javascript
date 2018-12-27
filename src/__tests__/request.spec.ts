@@ -58,6 +58,19 @@ describe('request', () => {
             );
         });
 
+        it('calls should not send "application/json", if method is not passed', async () => {
+            await request(TEST_URL);
+
+            expect(getMockFetch()).toHaveBeenCalledTimes(1);
+            expect(getMockFetch()).toHaveBeenCalledWith(
+                TEST_URL,
+                expect.objectContaining({
+                    credentials: 'same-origin',
+                    headers: {},
+                })
+            );
+        });
+
         it('calls fetch and respects overrides in options', async () => {
             await request(TEST_URL, {credentials: 'omit'});
 

@@ -37,7 +37,7 @@ const _tryParseJSON = (res: Response): Promise<any> => {
  */
 export const _fetchJSON = (
     url: string,
-    {headers, method, mode, ...options}: RequestInit = {}
+    {headers = {}, method = 'GET', mode, ...options}: RequestInit = {}
 ): Promise<{}> => {
     let fetchHeaders = headers as HeadersInit;
 
