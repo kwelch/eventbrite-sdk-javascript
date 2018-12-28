@@ -13,7 +13,8 @@ const rollupNodeResolve = require('rollup-plugin-node-resolve');
 const rollupCommonjs = require('rollup-plugin-commonjs');
 const rollupJson = require('rollup-plugin-json');
 const rollupReplace = require('rollup-plugin-replace');
-const rollupUglify = require('rollup-plugin-uglify');
+const rollupTypescript = require('rollup-plugin-typescript');
+const {uglify: rollupUglify} = require('rollup-plugin-uglify');
 
 const FORMAT_ESM = 'esm';
 const FORMAT_CJS = 'cjs';
@@ -109,6 +110,9 @@ const _genDist = ({minify = false} = {}) =>
             // convert JSON files to ES6 modules, so they can be included in Rollup bundle
             rollupJson(),
 
+            // gives rollup ability to read typescript files
+            rollupTypescript(),
+
             // Locate modules using the Node resolution algorithm, for using third party modules in node_modules
             rollupNodeResolve({
                 // use "module" field for ES6 module if possible
@@ -186,13 +190,16 @@ gulp.task('build:dist:min', () => _genDist({minify: true}));
 gulp.task('build:lib:umd', () => _genUmd());
 gulp.task('build:lib:umd:min', () => _genUmd({minify: true}));
 
-gulp.task('build:lib', [
-    'build:lib:esm',
-    'build:lib:cjs',
-    'build:lib:umd',
-    'build:lib:umd:min',
-]);
+gulp.task(
+    'build:lib',
+    gulp.series(
+        'build:lib:esm',
+        'build:lib:cjs',
+        'build:lib:umd',
+        'build:lib:umd:min'
+    )
+);
 
-gulp.task('build', ['build:lib', 'build:dist', 'build:dist:min']);
+gulp.task('build', gulp.series('build:lib', 'build:dist', 'build:dist:min'));
 
-gulp.task('default', ['build']);
+gulp.task('default', gulp.series('build'));
