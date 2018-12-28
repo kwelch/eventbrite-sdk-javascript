@@ -7,6 +7,7 @@ This SDK interface closely mirors the [Eventbrite v3 REST API](https://www.event
 -   [Including the package](#including-the-package)
 -   [Configuring a SDK object](#configuring-a-sdk-object)
 -   [`request()`](./request.md)
+-   [Users](./users.md)
 
 ## Including the package
 
