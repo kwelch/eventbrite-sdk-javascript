@@ -1,9 +1,18 @@
+import {UserCollection} from './users';
+
 export interface SdkConfig {
     token?: string;
     baseUrl?: string;
 }
+
+export type RequestHelper = (
+    apiPath: string,
+    options?: RequestInit
+) => Promise<{}>;
+
 export interface Sdk {
-    request: (apiPath: string, options?: RequestInit) => Promise<{}>;
+    request: RequestHelper;
+    users: UserCollection;
 }
 
 export interface ArgumentErrors {
