@@ -55,7 +55,7 @@ const eventbrite = require('eventbrite');
 // Create configured Eventbrite SDK
 const sdk = eventbrite({token: 'OATH_TOKEN_HERE'});
 
-sdk.users.get(1234567890).then((user) => {
+sdk.users.get('1234567890').then((user) => {
     console.log(`Hi ${user.name}!`);
 });
 ```
