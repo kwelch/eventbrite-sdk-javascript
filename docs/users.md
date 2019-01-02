@@ -8,7 +8,7 @@ View the [User response object](user-object-reference) for details on the proper
 
 - [`sdk.users.me()`](#me)
 - [`sdk.users.get(id)`](#getById)
-- [`sdk.users.lookup(email)`](#lookByEmail)
+- [`sdk.users.emailLookup(email)`](#lookByEmail)
 
 <a id="me"></a>
 
@@ -62,14 +62,14 @@ sdk.users.get(1234567890).then((user) => {
 
 <a id="lookByEmail"></a>
 
-## `sdk.users.lookup()`
+## `sdk.users.emailLookup(email)`
 This method is used to load the details for a specific user. Currently it supports look ups via the email property.
 
 **_Currently, no public documentation page._**
 
 ### API
 ```js
-sdk.users.lookup(Object<{email: string}>): Promise<User>
+sdk.users.emailLookup(string>): Promise<User>
 ```
 
 ### Example
@@ -80,7 +80,7 @@ const eventbrite = require('eventbrite');
 // Create configured Eventbrite SDK
 const sdk = eventbrite({token: 'OATH_TOKEN_HERE'});
 
-sdk.users.lookup({email: 'developer@eventbrite.com'}).then((user) => {
+sdk.users.emailLookup('developer@eventbrite.com').then((user) => {
     console.log(`Hi ${user.name}!`);
 });
 ```
