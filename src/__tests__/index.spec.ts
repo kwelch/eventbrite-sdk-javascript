@@ -90,4 +90,39 @@ describe('request', () => {
             })
         );
     });
+
+    describe('users collection', () => {
+        it('should return an object of functions', () => {
+            const {users} = eventbrite({
+                token: MOCK_TOKEN,
+                baseUrl: MOCK_BASE_URL,
+            });
+
+            expect(users).toBeDefined();
+            for (const value of Object.values(users)) {
+                expect(value).toEqual(expect.any(Function));
+            }
+        });
+
+        it('makes request to API base url override w/ specified token', async() => {
+            const {users} = eventbrite({
+                token: MOCK_TOKEN,
+                baseUrl: MOCK_BASE_URL,
+            });
+
+            await expect(users.me()).resolves.toEqual(
+                MOCK_USERS_ME_RESPONSE_DATA
+            );
+
+            expect(getMockFetch()).toHaveBeenCalledTimes(1);
+            expect(getMockFetch()).toHaveBeenCalledWith(
+                `${MOCK_BASE_URL}/users/me/`,
+                expect.objectContaining({
+                    headers: expect.objectContaining({
+                        Authorization: `Bearer ${MOCK_TOKEN}`,
+                    }),
+                })
+            );
+        });
+    });
 });
