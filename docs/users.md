@@ -1,10 +1,10 @@
 # Users
 
-This is a collection of method that are intended to be helpful wrappers around the [Users api endpoints](user-api-docs).
+This is a collection of method that are intended to be helpful wrappers around the [Users API endpoints](user-api-docs).
 
-The definition of the [User response object can be found here](user-object-reference).
+View the [User response object](user-object-reference) for details on the properties you'll get back with each response.
 
-## ToC
+## Table on Contents
 
 - [`sdk.users.me()`](#me)
 - [`sdk.users.get(id)`](#getById)
@@ -15,7 +15,7 @@ The definition of the [User response object can be found here](user-object-refer
 ## `sdk.users.me()`
 This method is used to get details about the current logged in user.
 
-**[Documentation](user-get-me)**
+**Read [`/users/me` documentation](user-get-me) for more details.**
 
 ### API
 ```js
@@ -40,7 +40,7 @@ sdk.users.me().then((user) => {
 ## `sdk.users.get(id)`
 This method is used to load the details for a specific user by their user id. 
 
-**[Documentation](user-get-id)**
+**Read [`/users/:id` documentation](user-get-me) for more details.**
 
 ### API
 ```js
@@ -62,14 +62,14 @@ sdk.users.get(1234567890).then((user) => {
 
 <a id="lookByEmail"></a>
 
-## `sdk.users.lookup(email)`
-This method is used to load the details for a specific user by their email address. 
+## `sdk.users.lookup()`
+This method is used to load the details for a specific user. Currently it supports look ups via the email property.
 
-**_Currently, no public documentation page_**
+**_Currently, no public documentation page._**
 
 ### API
 ```js
-sdk.users.lookup(email: string): Promise<User>
+sdk.users.lookup(Object<{email: string}>): Promise<User>
 ```
 
 ### Example
@@ -80,7 +80,7 @@ const eventbrite = require('eventbrite');
 // Create configured Eventbrite SDK
 const sdk = eventbrite({token: 'OATH_TOKEN_HERE'});
 
-sdk.users.lookup('developer@eventbrite.com').then((user) => {
+sdk.users.lookup({email: 'developer@eventbrite.com'}).then((user) => {
     console.log(`Hi ${user.name}!`);
 });
 ```

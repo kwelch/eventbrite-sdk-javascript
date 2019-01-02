@@ -24,7 +24,7 @@ The official JavaScript SDK for the [Eventbrite v3 API](https://www.eventbrite.c
 
 > NOTE: This library is still in **beta** as we flesh out the API of the SDK.
 
-## ToC
+## Table of Contents
 
 *   [Installation](#installation)
 *   [Quick Usage](#quick-usage)
