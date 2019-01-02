@@ -18,8 +18,7 @@ export interface UserCollection {
 }
 
 export default (request: RequestHelper): UserCollection => {
-    const me = (): Promise<UserObject> =>
-        request('/users/me/') as Promise<UserObject>;
+    const me = () => request('/users/me/') as Promise<UserObject>;
 
     return {
         me,
