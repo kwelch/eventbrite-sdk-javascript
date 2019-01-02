@@ -100,7 +100,7 @@ describe('request', () => {
 
             expect(users).toBeDefined();
             for (const value of Object.values(users)) {
-                expect(value).toEqual(expect.any(Function));
+                expect(value).toBeInstanceOf(Function);
             }
         });
 
