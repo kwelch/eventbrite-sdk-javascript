@@ -5,7 +5,10 @@ import {
     restoreMockFetch,
     getMockResponse,
 } from './utils';
-import {MOCK_USERS_ME_RESPONSE_DATA} from './__fixtures__';
+import {
+    MOCK_USERS_ME_RESPONSE_DATA,
+    MOCK_TRANSFORMED_USERS_ME_RESPONSE_DATA,
+} from './__fixtures__';
 
 describe('configurations', () => {
     it('does not error when creating sdk object w/o configuration', () => {
@@ -111,7 +114,7 @@ describe('request', () => {
             });
 
             await expect(users.me()).resolves.toEqual(
-                MOCK_USERS_ME_RESPONSE_DATA
+                MOCK_TRANSFORMED_USERS_ME_RESPONSE_DATA
             );
 
             expect(getMockFetch()).toHaveBeenCalledTimes(1);

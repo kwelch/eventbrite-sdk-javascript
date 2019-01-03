@@ -26,7 +26,11 @@ const transformKeysSnakeToCamel = (obj: {}): {} =>
         const camelKey = snakeToCamel(key);
         let newValue = value;
 
-        if (typeof newValue === 'object' && !Array.isArray(newValue)) {
+        if (
+            newValue &&
+            typeof newValue === 'object' &&
+            !Array.isArray(newValue)
+        ) {
             newValue = transformKeysSnakeToCamel(newValue);
         }
 
