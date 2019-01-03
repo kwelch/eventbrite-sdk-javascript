@@ -13,7 +13,7 @@ View the [User response object](user-object-reference) for details on the proper
 <a id="me"></a>
 
 ## `sdk.users.me()`
-This method is used to get details about the current logged in user.
+Gets details about the current logged in user.
 
 **Read [`/users/me` documentation](user-get-me) for more details.**
 
@@ -38,7 +38,7 @@ sdk.users.me().then((user) => {
 <a id="getById"></a>
 
 ## `sdk.users.get(id)`
-This method is used to load the details for a specific user by their user id. 
+Gets the details for a specific user by their user id. 
 
 **Read [`/users/:id` documentation](user-get-me) for more details.**
 
@@ -63,7 +63,7 @@ sdk.users.get('1234567890').then((user) => {
 <a id="lookByEmail"></a>
 
 ## `sdk.users.emailLookup(email)`
-This method is used to load the details for a specific user. Currently it supports look ups via the email property.
+Gets the details for a specific user using their emaill address.
 
 **_Currently, no public documentation page._**
 
