@@ -22,10 +22,10 @@ const SNAKE_CASE_MATCH = /_\w/g;
 const snakeToCamel = (str: string) =>
     str.replace(SNAKE_CASE_MATCH, (chars: string) => chars[1].toUpperCase());
 
-const transformKeysSnakeToCamel = (obj: {}): {} =>
-    Object.entries(obj).reduce((memo, [key, value]) => {
+const transformKeysSnakeToCamel = (obj: { [key: string]: any }): {} =>
+    Object.keys(obj).reduce((memo, key) => {
+        let newValue = obj[key];
         const camelKey = snakeToCamel(key);
-        let newValue = value;
 
         if (
             newValue &&
