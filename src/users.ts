@@ -1,4 +1,4 @@
-import {RequestHelper} from './types';
+import {JSONRequest} from './types';
 
 export interface UserObject {
     id: string;
@@ -17,7 +17,7 @@ export interface UserMethods {
     me: () => Promise<UserObject>;
 }
 
-export default (request: RequestHelper): UserMethods => {
+export default (request: JSONRequest): UserMethods => {
     const me = () => request('/users/me/') as Promise<UserObject>;
 
     return {

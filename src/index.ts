@@ -1,4 +1,4 @@
-import {Sdk, SdkConfig, RequestHelper} from './types';
+import {Sdk, SdkConfig, JSONRequest} from './types';
 import request from './request';
 import userMethods from './users';
 
@@ -10,7 +10,7 @@ const eventbrite = ({
     baseUrl = DEFAULT_API_URL,
     token,
 }: SdkConfig = {}): Sdk => {
-    const requestHelper: RequestHelper = (endpoint, options = {}) => {
+    const requestHelper: JSONRequest = (endpoint, options = {}) => {
         const url = `${baseUrl}${endpoint}`;
         let requestOptions = options;
 

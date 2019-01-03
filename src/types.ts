@@ -5,13 +5,13 @@ export interface SdkConfig {
     baseUrl?: string;
 }
 
-export type RequestHelper = (
+export type JSONRequest = (
     apiPath: string,
     options?: RequestInit
 ) => Promise<{}>;
 
 export interface Sdk {
-    request: RequestHelper;
+    request: JSONRequest;
     users: UserMethods;
 }
 

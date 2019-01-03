@@ -1,4 +1,4 @@
-import {JSONResponseData, ParsedResponseError} from './types';
+import {JSONRequest, JSONResponseData, ParsedResponseError} from './types';
 import 'isomorphic-fetch';
 
 /**
@@ -145,5 +145,7 @@ const _catchStatusError = (res: Response): Promise<any> =>
  * Low-level method that makes fetch requests, returning the response formatted as JSON.
  * It parses errors from API v3 and throws exceptions with those errors
  */
-export default (url: string, options?: RequestInit): Promise<{}> =>
+const jsonRequest: JSONRequest = (url: string, options?: RequestInit) =>
     _fetchJSON(url, options).catch(_catchStatusError);
+
+export default jsonRequest;
