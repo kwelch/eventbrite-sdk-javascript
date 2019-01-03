@@ -1,4 +1,4 @@
-import {UserCollection} from './users';
+import {UserMethods} from './users';
 
 export interface SdkConfig {
     token?: string;
@@ -12,7 +12,7 @@ export type RequestHelper = (
 
 export interface Sdk {
     request: RequestHelper;
-    users: UserCollection;
+    users: UserMethods;
 }
 
 export interface ArgumentErrors {

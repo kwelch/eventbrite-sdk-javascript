@@ -1,6 +1,6 @@
 import {Sdk, SdkConfig, RequestHelper} from './types';
 import request from './request';
-import userCollection from './users';
+import userMethods from './users';
 
 export * from './constants';
 
@@ -29,7 +29,7 @@ const eventbrite = ({
 
     return {
         request: requestHelper,
-        users: userCollection(requestHelper),
+        users: userMethods(requestHelper),
     };
 };
 

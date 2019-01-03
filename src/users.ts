@@ -13,11 +13,11 @@ export interface UserObject {
     ];
 }
 
-export interface UserCollection {
-    [key: string]: () => Promise<UserObject>;
+export interface UserMethods {
+    me: () => Promise<UserObject>;
 }
 
-export default (request: RequestHelper): UserCollection => {
+export default (request: RequestHelper): UserMethods => {
     const me = () => request('/users/me/') as Promise<UserObject>;
 
     return {
