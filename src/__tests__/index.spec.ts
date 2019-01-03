@@ -102,9 +102,11 @@ describe('request', () => {
             });
 
             expect(users).toBeDefined();
-            for (const value of Object.values(users)) {
+            Object.keys(users).forEach((key) => {
+                const value = users[key];
+
                 expect(value).toBeInstanceOf(Function);
-            }
+            });
         });
 
         it('makes request to API base url override w/ specified token', async() => {
