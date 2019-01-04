@@ -30,4 +30,32 @@ describe('users.me()', () => {
 
         restoreMockFetch();
     });
+
+    it('handle token missing requests', async() => {
+        mockFetch(
+            getMockResponse(
+                {
+                    status_code: 401,
+                    error_description:
+                        'An OAuth token is required for all requests',
+                    error: 'NO_AUTH',
+                },
+                {status: 401}
+            )
+        );
+
+        await expect(users.me()).rejects.toMatchObject({
+            response: expect.objectContaining({
+                status: 401,
+                statusText: 'Unauthorized',
+                ok: false,
+            }),
+            parsedError: {
+                description: 'An OAuth token is required for all requests',
+                error: 'NO_AUTH',
+            },
+        });
+
+        restoreMockFetch();
+    });
 });
