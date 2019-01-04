@@ -129,5 +129,29 @@ describe('request', () => {
                 })
             );
         });
+
+        it('combines request options properly', async() => {
+            const {users} = eventbrite({
+                token: MOCK_TOKEN,
+                baseUrl: MOCK_BASE_URL,
+            });
+            const email = 'engineer@eventbrite.com';
+
+            await expect(users.emailLookup(email)).resolves.toEqual(
+                MOCK_TRANSFORMED_USERS_ME_RESPONSE_DATA
+            );
+
+            expect(getMockFetch()).toHaveBeenCalledTimes(1);
+            expect(getMockFetch()).toHaveBeenCalledWith(
+                `${MOCK_BASE_URL}/users/lookup/`,
+                expect.objectContaining({
+                    method: 'POST',
+                    body: JSON.stringify({email}),
+                    headers: expect.objectContaining({
+                        Authorization: `Bearer ${MOCK_TOKEN}`,
+                    }),
+                })
+            );
+        });
     });
 });

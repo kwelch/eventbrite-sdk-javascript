@@ -14,8 +14,10 @@ export interface User {
 }
 
 export interface UserMethods {
-    [key: string]: () => Promise<{}>;
+    [key: string]: () => Promise<User>;
     me: () => Promise<User>;
+    get: (id: string) => Promise<User>;
+    emailLookup: (email: string) => Promise<User>;
 }
 
 const SNAKE_CASE_MATCH = /_\w/g;
@@ -45,7 +47,20 @@ export default (request: JSONRequest): UserMethods => {
     const me = () =>
         request('/users/me/').then(transformKeysSnakeToCamel) as Promise<User>;
 
+    const get = (id: string) =>
+        request(`/users/${id}/`).then(transformKeysSnakeToCamel) as Promise<
+            User
+        >;
+
+    const emailLookup = (email: string) =>
+        request('/users/lookup/', {
+            method: 'POST',
+            body: JSON.stringify({email}),
+        }).then(transformKeysSnakeToCamel) as Promise<User>;
+
     return {
         me,
+        get,
+        emailLookup,
     };
 };
