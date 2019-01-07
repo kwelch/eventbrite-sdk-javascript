@@ -19,6 +19,9 @@ export interface IUserApi {
     emailLookup(email: string): Promise<User>;
 }
 
+/**
+ * API for working with Users
+ */
 export class UserApi extends BaseApi<User> implements IUserApi {
     async me() {
         const response = await this.request('/users/me/');

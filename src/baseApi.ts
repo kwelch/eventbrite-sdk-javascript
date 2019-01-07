@@ -26,6 +26,9 @@ function transformKeysSnakeToCamel<T extends { [key: string]: any } = {}>(
     }, {}) as T;
 }
 
+/**
+ * Returns a function that sends a request, and transforms its results
+ */
 function makeJsonRequest<T>(
     request: JSONRequest<T>,
     transformers: Array<(obj: T) => T>
@@ -43,6 +46,10 @@ interface IApiClass<T> {
     request: JSONRequest<T>;
 }
 
+/**
+ * Base API class for creating new API Classes.
+ * Also encapsulates default transformers such as snake to camel.
+ */
 export abstract class BaseApi<T> implements IApiClass<T> {
     request: JSONRequest<T>;
 

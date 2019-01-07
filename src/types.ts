@@ -1,4 +1,4 @@
-import {UserMethods, UserApi} from './users';
+import {IUserApi} from './users';
 
 export interface SdkConfig {
     token?: string;
@@ -12,7 +12,7 @@ export type JSONRequest<T = {}> = (
 
 export interface Sdk {
     request: JSONRequest;
-    users: UserApi;
+    users: IUserApi;
 }
 
 export interface ArgumentErrors {
