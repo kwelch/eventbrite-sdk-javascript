@@ -1,16 +1,13 @@
 import {Sdk, SdkConfig, JSONRequest} from './types';
 import request from './request';
-import userMethods from './users';
+import {UserApi} from './users';
 
 export * from './constants';
 
 const DEFAULT_API_URL = 'https://www.eventbriteapi.com/v3';
 
-const eventbrite = ({
-    baseUrl = DEFAULT_API_URL,
-    token,
-}: SdkConfig = {}): Sdk => {
-    const requestHelper: JSONRequest = (endpoint, options = {}) => {
+function makeRequest<T>(baseUrl: string, token: string) {
+    const requestHelper: JSONRequest<T> = (endpoint, options = {}) => {
         const url = `${baseUrl}${endpoint}`;
         let requestOptions = options;
 
@@ -27,10 +24,15 @@ const eventbrite = ({
         return request(url, requestOptions);
     };
 
-    return {
-        request: requestHelper,
-        users: userMethods(requestHelper),
-    };
-};
+    return requestHelper;
+}
+
+const eventbrite = ({
+    baseUrl = DEFAULT_API_URL,
+    token,
+}: SdkConfig = {}): Sdk => ({
+    request: makeRequest(baseUrl, token),
+    users: new UserApi(makeRequest(baseUrl, token)),
+});
 
 export default eventbrite;

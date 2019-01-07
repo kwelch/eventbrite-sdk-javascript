@@ -1,18 +1,18 @@
-import {UserMethods} from './users';
+import {UserMethods, UserApi} from './users';
 
 export interface SdkConfig {
     token?: string;
     baseUrl?: string;
 }
 
-export type JSONRequest = (
+export type JSONRequest<T = {}> = (
     apiPath: string,
     options?: RequestInit
-) => Promise<{}>;
+) => Promise<T>;
 
 export interface Sdk {
     request: JSONRequest;
-    users: UserMethods;
+    users: UserApi;
 }
 
 export interface ArgumentErrors {

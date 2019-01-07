@@ -1,31 +1,26 @@
 import {JSONRequest} from './types';
 
-export type Email = {
-    email: string;
-    primary: boolean;
-};
-
-export interface User {
-    id: string;
-    firstName: string;
-    lastName: string;
-    imageId: string;
-    email: Email[];
+export interface Email {
+    email?: string;
+    primary?: boolean;
 }
 
-export interface UserMethods {
-    [key: string]: () => Promise<User>;
-    me: () => Promise<User>;
-    get: (id: string) => Promise<User>;
-    emailLookup: (email: string) => Promise<User>;
+export interface User {
+    id?: string;
+    firstName?: string;
+    lastName?: string;
+    imageId?: string;
+    email?: Email[];
 }
 
 const SNAKE_CASE_MATCH = /_\w/g;
 const snakeToCamel = (str: string) =>
     str.replace(SNAKE_CASE_MATCH, (chars: string) => chars[1].toUpperCase());
 
-const transformKeysSnakeToCamel = (obj: { [key: string]: any }): {} =>
-    Object.keys(obj).reduce((memo, key) => {
+function transformKeysSnakeToCamel<T extends { [key: string]: any } = {}>(
+    obj: T
+): T {
+    return Object.keys(obj).reduce((memo, key) => {
         let newValue = obj[key];
         const camelKey = snakeToCamel(key);
 
@@ -41,26 +36,64 @@ const transformKeysSnakeToCamel = (obj: { [key: string]: any }): {} =>
             ...memo,
             [camelKey]: newValue,
         };
-    }, {});
+    }, {}) as T;
+}
 
-export default (request: JSONRequest): UserMethods => {
-    const me = () =>
-        request('/users/me/').then(transformKeysSnakeToCamel) as Promise<User>;
+function makeJsonRequest<T>(
+    request: JSONRequest<T>,
+    transformers: Array<(obj: T) => T>
+) {
+    return (url: string, options?: RequestInit) => request(url, options).then((response) =>
+        transformers.reduce<T>((memo, transformer) => {
+            memo = transformer(response);
+            return memo;
+        }, response)
+    );
+}
 
-    const get = (id: string) =>
-        request(`/users/${id}/`).then(transformKeysSnakeToCamel) as Promise<
-            User
-        >;
+interface IApiClass<T> {
+    request: JSONRequest<T>;
+}
 
-    const emailLookup = (email: string) =>
-        request('/users/lookup/', {
+abstract class BaseApi<T> implements IApiClass<T> {
+    request: JSONRequest<T>;
+
+    constructor(req: JSONRequest<T>) {
+        this.request = makeJsonRequest(req, [transformKeysSnakeToCamel]);
+    }
+}
+
+export interface IUserApi {
+    me(): Promise<User>;
+    get(id: string): Promise<User>;
+    emailLookup(email: string): Promise<User>;
+}
+
+export class UserApi extends BaseApi<User> implements IUserApi {
+    async me() {
+        const response = await this.request('/users/me/');
+
+        return response;
+    }
+
+    async get(id: string) {
+        const response = await this.request(`/users/${id}/`);
+
+        return response;
+    }
+
+    async emailLookup(email: string) {
+        const response = await this.request('/users/lookup/', {
             method: 'POST',
             body: JSON.stringify({email}),
-        }).then(transformKeysSnakeToCamel) as Promise<User>;
+        });
 
-    return {
-        me,
-        get,
-        emailLookup,
-    };
-};
+        return response;
+    }
+}
+
+// (async function() {
+//     const api = new UserApi(request);
+
+//     const user = await api.me();
+// })();
