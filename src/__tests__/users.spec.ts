@@ -10,10 +10,10 @@ import {
 } from './__fixtures__';
 
 import request from '../request';
-import {UserApi, IUserApi} from '../users';
+import {UserApi} from '../users';
 
 describe('users.me()', () => {
-    let users: IUserApi;
+    let users: UserApi;
 
     beforeEach(() => {
         users = new UserApi(request);
@@ -65,7 +65,7 @@ describe('users.me()', () => {
 });
 
 describe('users.get(id)', () => {
-    let users: IUserApi;
+    let users: UserApi;
 
     beforeEach(() => {
         users = new UserApi(request);
@@ -116,7 +116,7 @@ describe('users.get(id)', () => {
 });
 
 describe('users.emailLookup(email)', () => {
-    let users: IUserApi;
+    let users: UserApi;
 
     beforeEach(() => {
         users = new UserApi(request);

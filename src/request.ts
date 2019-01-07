@@ -1,4 +1,4 @@
-import {JSONRequest, JSONResponseData, ParsedResponseError} from './types';
+import {JSONResponseData, ParsedResponseError} from './types';
 import 'isomorphic-fetch';
 
 /**
@@ -35,10 +35,10 @@ const _tryParseJSON = (res: Response): Promise<any> => {
  * with our JSON API. Parses the JSON, provides appropriate headers, and asserts
  * a valid status from the server.
  */
-function _fetchJSON<T>(
+const _fetchJSON = <T>(
     url: string,
     {headers = {}, method = 'GET', mode, ...options}: RequestInit = {}
-): Promise<T> {
+): Promise<T> => {
     let fetchHeaders = headers as HeadersInit;
 
     if (method !== 'GET') {
@@ -59,7 +59,7 @@ function _fetchJSON<T>(
     return fetch(url, fetchOptions)
         .then(_checkStatus)
         .then(_tryParseJSON);
-}
+};
 
 const _hasArgumentsError = (responseData: JSONResponseData): boolean =>
     !!(
@@ -145,8 +145,7 @@ const _catchStatusError = (res: Response): Promise<any> =>
  * Low-level method that makes fetch requests, returning the response formatted as JSON.
  * It parses errors from API v3 and throws exceptions with those errors
  */
-function jsonRequest<T>(url: string, options?: RequestInit) {
-    return _fetchJSON<T>(url, options).catch(_catchStatusError);
-}
+const jsonRequest = <T>(url: string, options?: RequestInit) =>
+    _fetchJSON<T>(url, options).catch(_catchStatusError);
 
 export default jsonRequest;

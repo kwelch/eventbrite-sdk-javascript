@@ -13,16 +13,10 @@ export interface User {
     email?: Email[];
 }
 
-export interface IUserApi {
-    me(): Promise<User>;
-    get(id: string): Promise<User>;
-    emailLookup(email: string): Promise<User>;
-}
-
 /**
  * API for working with Users
  */
-export class UserApi extends BaseApi<User> implements IUserApi {
+export class UserApi extends BaseApi<User> {
     async me() {
         const response = await this.request('/users/me/');
 

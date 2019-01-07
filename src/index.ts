@@ -6,26 +6,30 @@ export * from './constants';
 
 const DEFAULT_API_URL = 'https://www.eventbriteapi.com/v3';
 
-function makeRequest<T>(baseUrl: string, token: string) {
-    const requestHelper: JSONRequest<T> = (endpoint, options = {}) => {
-        const url = `${baseUrl}${endpoint}`;
-        let requestOptions = options;
+type MakeRequestFunction = <T>(
+    baseUrl: string,
+    token: string
+) => JSONRequest<T>;
 
-        if (token) {
-            requestOptions = {
-                ...requestOptions,
-                headers: {
-                    ...(requestOptions.headers || {}),
-                    Authorization: `Bearer ${token}`,
-                },
-            };
-        }
+const makeRequest: MakeRequestFunction = (baseUrl: string, token: string) => (
+    endpoint,
+    options = {}
+) => {
+    const url = `${baseUrl}${endpoint}`;
+    let requestOptions = options;
 
-        return request(url, requestOptions);
-    };
+    if (token) {
+        requestOptions = {
+            ...requestOptions,
+            headers: {
+                ...(requestOptions.headers || {}),
+                Authorization: `Bearer ${token}`,
+            },
+        };
+    }
 
-    return requestHelper;
-}
+    return request(url, requestOptions);
+};
 
 const eventbrite = ({
     baseUrl = DEFAULT_API_URL,
