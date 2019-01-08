@@ -103,7 +103,7 @@ describe('request', () => {
 
             expect(users).toBeDefined();
             Object.keys(users).forEach((key) => {
-                const value = users[key];
+                const value = (users as any)[key];
 
                 expect(value).toBeInstanceOf(Function);
             });

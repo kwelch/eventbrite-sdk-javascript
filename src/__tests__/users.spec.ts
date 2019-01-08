@@ -10,11 +10,15 @@ import {
 } from './__fixtures__';
 
 import request from '../request';
-import usersMethods from '../users';
-
-const users = usersMethods(request);
+import {UserApi} from '../users';
 
 describe('users.me()', () => {
+    let users: UserApi;
+
+    beforeEach(() => {
+        users = new UserApi(request);
+    });
+
     it('calls fetch and calls fetch with appropriate defaults', async() => {
         mockFetch(getMockResponse(MOCK_USERS_ME_RESPONSE_DATA));
 
@@ -61,6 +65,12 @@ describe('users.me()', () => {
 });
 
 describe('users.get(id)', () => {
+    let users: UserApi;
+
+    beforeEach(() => {
+        users = new UserApi(request);
+    });
+
     it('calls fetch and calls fetch with appropriate defaults', async() => {
         mockFetch(getMockResponse(MOCK_USERS_ME_RESPONSE_DATA));
 
@@ -106,6 +116,12 @@ describe('users.get(id)', () => {
 });
 
 describe('users.emailLookup(email)', () => {
+    let users: UserApi;
+
+    beforeEach(() => {
+        users = new UserApi(request);
+    });
+
     it('calls fetch and calls fetch with appropriate defaults', async() => {
         mockFetch(getMockResponse(MOCK_USERS_ME_RESPONSE_DATA));
         const email = 'engineer@eventbrite.com';
