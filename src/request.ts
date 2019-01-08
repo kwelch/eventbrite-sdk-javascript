@@ -143,11 +143,15 @@ const _catchStatusError = (res: Response): Promise<any> =>
             );
     });
 
+export interface DefaultApiResponse {
+    [key: string]: any;
+}
+
 /**
  * Low-level method that makes fetch requests, returning the response formatted as JSON.
  * It parses errors from API v3 and throws exceptions with those errors
  */
-const jsonRequest = <TResponseType = any>(
+const jsonRequest = <TResponseType = DefaultApiResponse>(
     url: string,
     options?: RequestInit
 ): Promise<TResponseType> =>
