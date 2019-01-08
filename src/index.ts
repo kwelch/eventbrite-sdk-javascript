@@ -6,10 +6,7 @@ export * from './constants';
 
 const DEFAULT_API_URL = 'https://www.eventbriteapi.com/v3';
 
-type MakeRequestFunction = <T>(
-    baseUrl: string,
-    token: string
-) => JSONRequest<T>;
+type MakeRequestFunction = (baseUrl: string, token: string) => JSONRequest;
 
 const makeRequest: MakeRequestFunction = (baseUrl: string, token: string) => (
     endpoint,
@@ -34,9 +31,13 @@ const makeRequest: MakeRequestFunction = (baseUrl: string, token: string) => (
 const eventbrite = ({
     baseUrl = DEFAULT_API_URL,
     token,
-}: SdkConfig = {}): Sdk => ({
-    request: makeRequest(baseUrl, token),
-    users: new UserApi(makeRequest(baseUrl, token)),
-});
+}: SdkConfig = {}): Sdk => {
+    const jsonRequest = makeRequest(baseUrl, token);
+
+    return {
+        request: jsonRequest,
+        users: new UserApi(jsonRequest),
+    };
+};
 
 export default eventbrite;

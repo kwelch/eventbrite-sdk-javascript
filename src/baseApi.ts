@@ -29,10 +29,10 @@ const transformKeysSnakeToCamel = <T extends { [key: string]: any } = {}>(
  * Returns a function that sends a request, and transforms its results
  */
 const makeJsonRequest = <T>(
-    request: JSONRequest<T>,
+    request: JSONRequest,
     transformers: Array<(obj: T) => T>
 ) => (url: string, options?: RequestInit) =>
-        request(url, options).then((response) =>
+        request(url, options).then((response: T) =>
             transformers.reduce<T>((acc, transformer) => {
                 let memo = acc;
 
