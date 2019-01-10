@@ -17,11 +17,6 @@ export interface User {
  * API for working with Users
  */
 export class UserApi extends BaseApi<User> {
-    me() {
-        return this.request('/users/me/');
-    }
-
-    get(id: string) {
-        return this.request(`/users/${id}/`);
-    }
+    me = () => this.request('/users/me/');
+    get = (id: string) => this.request(`/users/${id}/`);
 }
