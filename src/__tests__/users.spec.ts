@@ -14,11 +14,11 @@ import {UserApi} from '../users';
 
 describe('me()', () => {
     it('calls fetch and calls fetch with appropriate defaults', async() => {
-        const {me} = new UserApi(request);
+        const users = new UserApi(request);
 
         mockFetch(getMockResponse(MOCK_USERS_ME_RESPONSE_DATA));
 
-        await expect(me()).resolves.toEqual(
+        await expect(users.me()).resolves.toEqual(
             MOCK_TRANSFORMED_USERS_ME_RESPONSE_DATA
         );
 
@@ -32,7 +32,7 @@ describe('me()', () => {
     });
 
     it('handle token missing requests', async() => {
-        const {me} = new UserApi(request);
+        const users = new UserApi(request);
 
         mockFetch(
             getMockResponse(
@@ -46,7 +46,7 @@ describe('me()', () => {
             )
         );
 
-        await expect(me()).rejects.toMatchObject({
+        await expect(users.me()).rejects.toMatchObject({
             response: expect.objectContaining({
                 status: 401,
                 statusText: 'Unauthorized',
@@ -64,11 +64,11 @@ describe('me()', () => {
 
 describe('get(id)', () => {
     it('calls fetch and calls fetch with appropriate defaults', async() => {
-        const {get} = new UserApi(request);
+        const users = new UserApi(request);
 
         mockFetch(getMockResponse(MOCK_USERS_ME_RESPONSE_DATA));
 
-        await expect(get('142429416488')).resolves.toEqual(
+        await expect(users.get('142429416488')).resolves.toEqual(
             MOCK_TRANSFORMED_USERS_ME_RESPONSE_DATA
         );
 
@@ -82,7 +82,7 @@ describe('get(id)', () => {
     });
 
     it('should handle not found users', async() => {
-        const {get} = new UserApi(request);
+        const users = new UserApi(request);
 
         mockFetch(
             getMockResponse(
@@ -95,7 +95,7 @@ describe('get(id)', () => {
             )
         );
 
-        await expect(get('123')).rejects.toMatchObject({
+        await expect(users.get('123')).rejects.toMatchObject({
             response: expect.objectContaining({
                 status: 404,
                 statusText: 'Not Found',
