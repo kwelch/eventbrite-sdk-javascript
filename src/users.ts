@@ -17,15 +17,11 @@ export interface User {
  * API for working with Users
  */
 export class UserApi extends BaseApi<User> {
-    async me() {
-        const response = await this.request('/users/me/');
-
-        return response;
+    me() {
+        return this.request('/users/me/');
     }
 
-    async get(id: string) {
-        const response = await this.request(`/users/${id}/`);
-
-        return response;
+    get(id: string) {
+        return this.request(`/users/${id}/`);
     }
 }
