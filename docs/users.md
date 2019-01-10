@@ -8,7 +8,6 @@ View the [User response object](user-object-reference) for details on the proper
 
 - [`sdk.users.me()`](#me)
 - [`sdk.users.get(id)`](#getById)
-- [`sdk.users.emailLookup(email)`](#lookByEmail)
 
 <a id="me"></a>
 
@@ -59,32 +58,6 @@ sdk.users.get('1234567890').then((user) => {
     console.log(`Hi ${user.name}!`);
 });
 ```
-
-<a id="lookByEmail"></a>
-
-## `sdk.users.emailLookup(email)`
-Gets the details for a specific user using their emaill address.
-
-**_Currently, no public documentation page._**
-
-### API
-```js
-sdk.users.emailLookup(string>): Promise<User>
-```
-
-### Example
-
-```js
-const eventbrite = require('eventbrite');
-
-// Create configured Eventbrite SDK
-const sdk = eventbrite({token: 'OATH_TOKEN_HERE'});
-
-sdk.users.emailLookup('developer@eventbrite.com').then((user) => {
-    console.log(`Hi ${user.name}!`);
-});
-```
-
 
 <!-- link reference section -->
 [user-api-docs]: https://www.eventbrite.com/platform/api#/reference/user

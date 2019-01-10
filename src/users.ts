@@ -28,13 +28,4 @@ export class UserApi extends BaseApi<User> {
 
         return response;
     }
-
-    async emailLookup(email: string) {
-        const response = await this.request('/users/lookup/', {
-            method: 'POST',
-            body: JSON.stringify({email}),
-        });
-
-        return response;
-    }
 }

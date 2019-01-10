@@ -114,31 +114,3 @@ describe('users.get(id)', () => {
         restoreMockFetch();
     });
 });
-
-describe('users.emailLookup(email)', () => {
-    let users: UserApi;
-
-    beforeEach(() => {
-        users = new UserApi(request);
-    });
-
-    it('calls fetch and calls fetch with appropriate defaults', async() => {
-        mockFetch(getMockResponse(MOCK_USERS_ME_RESPONSE_DATA));
-        const email = 'engineer@eventbrite.com';
-
-        await expect(users.emailLookup(email)).resolves.toEqual(
-            MOCK_TRANSFORMED_USERS_ME_RESPONSE_DATA
-        );
-
-        expect(getMockFetch()).toHaveBeenCalledTimes(1);
-        expect(getMockFetch()).toHaveBeenCalledWith(
-            '/users/lookup/',
-            expect.objectContaining({
-                method: 'POST',
-                body: JSON.stringify({email}),
-            })
-        );
-
-        restoreMockFetch();
-    });
-});
