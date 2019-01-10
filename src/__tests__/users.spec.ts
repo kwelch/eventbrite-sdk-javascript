@@ -12,17 +12,13 @@ import {
 import request from '../request';
 import {UserApi} from '../users';
 
-describe('users.me()', () => {
-    let users: UserApi;
-
-    beforeEach(() => {
-        users = new UserApi(request);
-    });
-
+describe('me()', () => {
     it('calls fetch and calls fetch with appropriate defaults', async() => {
+        const {me} = new UserApi(request);
+
         mockFetch(getMockResponse(MOCK_USERS_ME_RESPONSE_DATA));
 
-        await expect(users.me()).resolves.toEqual(
+        await expect(me()).resolves.toEqual(
             MOCK_TRANSFORMED_USERS_ME_RESPONSE_DATA
         );
 
@@ -36,6 +32,8 @@ describe('users.me()', () => {
     });
 
     it('handle token missing requests', async() => {
+        const {me} = new UserApi(request);
+
         mockFetch(
             getMockResponse(
                 {
@@ -48,7 +46,7 @@ describe('users.me()', () => {
             )
         );
 
-        await expect(users.me()).rejects.toMatchObject({
+        await expect(me()).rejects.toMatchObject({
             response: expect.objectContaining({
                 status: 401,
                 statusText: 'Unauthorized',
@@ -64,17 +62,13 @@ describe('users.me()', () => {
     });
 });
 
-describe('users.get(id)', () => {
-    let users: UserApi;
-
-    beforeEach(() => {
-        users = new UserApi(request);
-    });
-
+describe('get(id)', () => {
     it('calls fetch and calls fetch with appropriate defaults', async() => {
+        const {get} = new UserApi(request);
+
         mockFetch(getMockResponse(MOCK_USERS_ME_RESPONSE_DATA));
 
-        await expect(users.get('142429416488')).resolves.toEqual(
+        await expect(get('142429416488')).resolves.toEqual(
             MOCK_TRANSFORMED_USERS_ME_RESPONSE_DATA
         );
 
@@ -88,6 +82,8 @@ describe('users.get(id)', () => {
     });
 
     it('should handle not found users', async() => {
+        const {get} = new UserApi(request);
+
         mockFetch(
             getMockResponse(
                 {
@@ -99,7 +95,7 @@ describe('users.get(id)', () => {
             )
         );
 
-        await expect(users.get('123')).rejects.toMatchObject({
+        await expect(get('123')).rejects.toMatchObject({
             response: expect.objectContaining({
                 status: 404,
                 statusText: 'Not Found',
