@@ -2,11 +2,12 @@
 
 This SDK interface closely mirors the [Eventbrite v3 REST API](https://www.eventbrite.com/developer/v3/) endpoints that it wraps. The SDK provides many conveniences for making requests and processing responses to make it easier to use in the JavaScript environment.
 
-## ToC
+## Table of Contents
 
 -   [Including the package](#including-the-package)
 -   [Configuring a SDK object](#configuring-a-sdk-object)
 -   [`request()`](./request.md)
+-   [Users](./users.md)
 
 ## Including the package
 

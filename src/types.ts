@@ -1,9 +1,18 @@
+import {UserApi} from './users';
+
 export interface SdkConfig {
     token?: string;
     baseUrl?: string;
 }
+
+export type JSONRequest<T = {}> = (
+    apiPath: string,
+    options?: RequestInit
+) => Promise<T>;
+
 export interface Sdk {
-    request: (apiPath: string, options?: RequestInit) => Promise<{}>;
+    request: JSONRequest;
+    users: UserApi;
 }
 
 export interface ArgumentErrors {

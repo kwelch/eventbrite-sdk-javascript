@@ -14,6 +14,22 @@ export const MOCK_USERS_ME_RESPONSE_DATA = {
     image_id: null as string,
 };
 
+export const MOCK_TRANSFORMED_USERS_ME_RESPONSE_DATA = {
+    emails: [
+        {
+            email: 'engineer@eventbrite.com',
+            verified: true,
+            primary: true,
+        },
+    ],
+    id: '142429416488',
+    name: 'Eventbrite Engineer',
+    firstName: 'Eventbrite',
+    lastName: 'Engineer',
+    isPublic: false,
+    imageId: null as string,
+};
+
 export const MOCK_INTERNAL_ERROR_RESPONSE_DATA = {
     status_code: 500,
     error: 'INTERNAL_ERROR',

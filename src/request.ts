@@ -14,7 +14,9 @@ const _checkStatus = (res: Response): Promise<Response> => {
     return Promise.resolve(res);
 };
 
-const _tryParseJSON = (res: Response): Promise<any> => {
+const _tryParseJSON = <TResponseType>(
+    res: Response
+): Promise<TResponseType> => {
     try {
         return (
             res
@@ -35,10 +37,10 @@ const _tryParseJSON = (res: Response): Promise<any> => {
  * with our JSON API. Parses the JSON, provides appropriate headers, and asserts
  * a valid status from the server.
  */
-export const _fetchJSON = (
+const _fetchJSON = <TResponseType>(
     url: string,
     {headers = {}, method = 'GET', mode, ...options}: RequestInit = {}
-): Promise<{}> => {
+): Promise<TResponseType> => {
     let fetchHeaders = headers as HeadersInit;
 
     if (method !== 'GET') {
@@ -58,7 +60,7 @@ export const _fetchJSON = (
 
     return fetch(url, fetchOptions)
         .then(_checkStatus)
-        .then(_tryParseJSON);
+        .then<TResponseType>(_tryParseJSON);
 };
 
 const _hasArgumentsError = (responseData: JSONResponseData): boolean =>
@@ -141,9 +143,18 @@ const _catchStatusError = (res: Response): Promise<any> =>
             );
     });
 
+export interface DefaultApiResponse {
+    [key: string]: any;
+}
+
 /**
  * Low-level method that makes fetch requests, returning the response formatted as JSON.
  * It parses errors from API v3 and throws exceptions with those errors
  */
-export default (url: string, options?: RequestInit): Promise<{}> =>
-    _fetchJSON(url, options).catch(_catchStatusError);
+const jsonRequest = <TResponseType = DefaultApiResponse>(
+    url: string,
+    options?: RequestInit
+): Promise<TResponseType> =>
+        _fetchJSON<TResponseType>(url, options).catch(_catchStatusError);
+
+export default jsonRequest;

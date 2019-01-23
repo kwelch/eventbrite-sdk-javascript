@@ -5,7 +5,10 @@ import {
     restoreMockFetch,
     getMockResponse,
 } from './utils';
-import {MOCK_USERS_ME_RESPONSE_DATA} from './__fixtures__';
+import {
+    MOCK_USERS_ME_RESPONSE_DATA,
+    MOCK_TRANSFORMED_USERS_ME_RESPONSE_DATA,
+} from './__fixtures__';
 
 describe('configurations', () => {
     it('does not error when creating sdk object w/o configuration', () => {
@@ -89,5 +92,42 @@ describe('request', () => {
                 }),
             })
         );
+    });
+
+    describe('users collection', () => {
+        it('should return an object of functions', () => {
+            const {users} = eventbrite({
+                token: MOCK_TOKEN,
+                baseUrl: MOCK_BASE_URL,
+            });
+
+            expect(users).toBeDefined();
+            Object.keys(users).forEach((key) => {
+                const value = (users as any)[key];
+
+                expect(value).toBeInstanceOf(Function);
+            });
+        });
+
+        it('makes request to API base url override w/ specified token', async() => {
+            const {users} = eventbrite({
+                token: MOCK_TOKEN,
+                baseUrl: MOCK_BASE_URL,
+            });
+
+            await expect(users.me()).resolves.toEqual(
+                MOCK_TRANSFORMED_USERS_ME_RESPONSE_DATA
+            );
+
+            expect(getMockFetch()).toHaveBeenCalledTimes(1);
+            expect(getMockFetch()).toHaveBeenCalledWith(
+                `${MOCK_BASE_URL}/users/me/`,
+                expect.objectContaining({
+                    headers: expect.objectContaining({
+                        Authorization: `Bearer ${MOCK_TOKEN}`,
+                    }),
+                })
+            );
+        });
     });
 });
