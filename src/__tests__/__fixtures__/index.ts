@@ -42,3 +42,53 @@ export const MOCK_ARGUMENTS_ERROR_RESPOSNE_DATA = {
     error_description: 'There are errors with your arguments: status - INVALID',
     error: 'ARGUMENTS_ERROR',
 };
+
+export const MOCK_ORGS_BY_USER_SUCCESS_RESPONSE = {
+    pagination: {
+        object_count: 3,
+        page_number: 1,
+        page_size: 10,
+        page_count: 1,
+        continuation: 'some_fake_continuation_key',
+        has_more_items: false,
+    },
+    organizations: [
+        {
+            id: '1',
+            name: 'Organization 1',
+        },
+        {
+            id: '2',
+            name: 'Organization 2',
+        },
+        {
+            id: '3',
+            name: 'Organization 3',
+        },
+    ],
+};
+
+export const MOCK_TRANSFORMED_ORGS_BY_USER = {
+    pagination: {
+        objectCount: 3,
+        pageNumber: 1,
+        pageSize: 10,
+        pageCount: 1,
+        continuation: 'some_fake_continuation_key',
+        hasMoreItems: false,
+    },
+    organizations: [
+        {
+            id: '1',
+            name: 'Organization 1',
+        },
+        {
+            id: '2',
+            name: 'Organization 2',
+        },
+        {
+            id: '3',
+            name: 'Organization 3',
+        },
+    ],
+};
