@@ -1,6 +1,7 @@
 import {Sdk, SdkConfig, JSONRequest} from './types';
 import request from './request';
 import {UserApi} from './users';
+import {OrganizationsApi} from './organizations';
 
 export * from './constants';
 
@@ -37,6 +38,7 @@ const eventbrite = ({
     return {
         request: jsonRequest,
         users: new UserApi(jsonRequest),
+        organizations: new OrganizationsApi(jsonRequest),
     };
 };
 
