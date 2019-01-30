@@ -1,4 +1,5 @@
 import {UserApi} from './users';
+import {OrganizationsApi} from './organizations';
 
 export interface SdkConfig {
     token?: string;
@@ -13,6 +14,7 @@ export type JSONRequest<T = {}> = (
 export interface Sdk {
     request: JSONRequest;
     users: UserApi;
+    organizations: OrganizationsApi;
 }
 
 export interface ArgumentErrors {
@@ -42,6 +44,6 @@ export interface Pagination {
 }
 
 export interface PaginatedResponse<T> {
-    pagination: Pagination;
+    pagination?: Pagination;
     [key: string]: T[] | Pagination;
 }

@@ -8,6 +8,8 @@ import {
 import {
     MOCK_USERS_ME_RESPONSE_DATA,
     MOCK_TRANSFORMED_USERS_ME_RESPONSE_DATA,
+    MOCK_TRANSFORMED_ORGS_BY_USER,
+    MOCK_ORGS_BY_USER_SUCCESS_RESPONSE,
 } from './__fixtures__';
 
 describe('configurations', () => {
@@ -122,6 +124,47 @@ describe('request', () => {
             expect(getMockFetch()).toHaveBeenCalledTimes(1);
             expect(getMockFetch()).toHaveBeenCalledWith(
                 `${MOCK_BASE_URL}/users/me/`,
+                expect.objectContaining({
+                    headers: expect.objectContaining({
+                        Authorization: `Bearer ${MOCK_TOKEN}`,
+                    }),
+                })
+            );
+        });
+    });
+
+    describe('organizations collection', () => {
+        it('should return an object of functions', () => {
+            mockFetch(getMockResponse(MOCK_ORGS_BY_USER_SUCCESS_RESPONSE));
+
+            const {organizations} = eventbrite({
+                token: MOCK_TOKEN,
+                baseUrl: MOCK_BASE_URL,
+            });
+
+            expect(organizations).toBeDefined();
+            Object.keys(organizations).forEach((key) => {
+                const value = (organizations as any)[key];
+
+                expect(value).toBeInstanceOf(Function);
+            });
+        });
+
+        it('makes request to API base url override w/ specified token', async() => {
+            mockFetch(getMockResponse(MOCK_ORGS_BY_USER_SUCCESS_RESPONSE));
+
+            const {organizations} = eventbrite({
+                token: MOCK_TOKEN,
+                baseUrl: MOCK_BASE_URL,
+            });
+
+            await expect(organizations.getByUser('fake_id')).resolves.toEqual(
+                MOCK_TRANSFORMED_ORGS_BY_USER
+            );
+
+            expect(getMockFetch()).toHaveBeenCalledTimes(1);
+            expect(getMockFetch()).toHaveBeenCalledWith(
+                `${MOCK_BASE_URL}/users/fake_id/organizations/`,
                 expect.objectContaining({
                     headers: expect.objectContaining({
                         Authorization: `Bearer ${MOCK_TOKEN}`,
