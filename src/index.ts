@@ -1,4 +1,4 @@
-import * as deepmerge from 'deepmerge';
+import {extend} from 'just-extend';
 import {Sdk, SdkConfig, JSONRequest} from './types';
 import request from './request';
 import {UserApi} from './users';
@@ -23,15 +23,16 @@ const makeRequest: MakeRequestFunction = (
     let requestOptions = options;
 
     if (token) {
-        requestOptions = deepmerge.all([
+        requestOptions = extend(
+            true,
             defaultOptions,
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             },
-            options,
-        ]);
+            options
+        );
     }
 
     return request(url, requestOptions);
